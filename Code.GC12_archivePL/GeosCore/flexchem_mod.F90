@@ -890,10 +890,6 @@ CONTAINS
 	   
 	   !IF (new_hour) THEN
 	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)
-                 IF(I==40 .and. J==20 .and. L==36) THEN
-                    print *,VAR(107),Prate(107),Lrate(107)
-                    print *,VAR(190),Prate(190),Lrate(190)
-                 ENDIF
 	     LS_Prate(I,J,L,:)=Prate
 	     LS_Lrate(I,J,L,:)=Lrate
 	     !if(MOD(I,30)==1 .and. J==10 .and. L==2) THEN
