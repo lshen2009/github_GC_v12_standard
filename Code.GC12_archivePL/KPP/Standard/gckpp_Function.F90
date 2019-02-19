@@ -1216,7 +1216,7 @@ SUBROUTINE Fun_PL ( V, F, RCT, Prate, Lrate)
 ! RCT - Rate constants (local)
   REAL(kind=dp) :: RCT(NREACT)
   REAL(kind=dp) :: Prate(NVAR),Lrate(NVAR),diff(NVAR),Vdot(NVAR)
-
+  INTEGER :: ind(1)
 ! Computation of equation rates
   A(1) = RCT(1)*V(221)*V(222)
   A(2) = RCT(2)*V(221)*V(231)
@@ -3041,9 +3041,14 @@ SUBROUTINE Fun_PL ( V, F, RCT, Prate, Lrate)
                 &-2*A(352)-A(356)-A(357)-A(358)-A(395)-A(396)-A(397)-A(669)
   Lrate(234) = -0.91*A(299)-A(324)-A(540)-A(543)-A(545)-A(549)-A(552)-A(558)-A(559)
 
-  diff=Prate+Lrate-Vdot
-  IF(SUM(ABS(diff))>1E-3) THEN
+  diff=Prate+Lrate-Vdot  
+  IF(SUM(ABS(diff))>1E-4) THEN
+     ind=maxloc(ABS(diff))
      print *,"lshen_FUN_PL_error",SUM(ABS(diff))
+	 print *,"lshen_tracer",ind(1)
+	 print *,"lshen_Prate",Prate(ind(1))
+	 print *,"lshen_Lrate",Lrate(ind(1))
+	 print *,"lshen_Vdot",Vdot(ind(1))
   ENDIF
 END SUBROUTINE Fun_PL
 
