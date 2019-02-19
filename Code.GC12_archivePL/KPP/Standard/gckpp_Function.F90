@@ -1215,7 +1215,7 @@ SUBROUTINE Fun_PL ( V, F, RCT, Prate, Lrate)
   REAL(kind=dp) :: F(NFIX)
 ! RCT - Rate constants (local)
   REAL(kind=dp) :: RCT(NREACT)
-  REAL(kind=dp) :: Prate(NVAR),Lrate(NVAR),diff(NVAR)
+  REAL(kind=dp) :: Prate(NVAR),Lrate(NVAR),diff(NVAR),Vdot(NVAR)
 
 ! Computation of equation rates
   A(1) = RCT(1)*V(221)*V(222)
