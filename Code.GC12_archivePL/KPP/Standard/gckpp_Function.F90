@@ -3043,7 +3043,7 @@ SUBROUTINE Fun_PL ( V, F, RCT, Prate, Lrate)
 
   diff=Prate+Lrate-Vdot
   IF(SUM(ABS(diff))>1) THEN
-     print *,"lshen_FUN_PL_error"
+     print *,"lshen_FUN_PL_error",SUM(ABS(diff))
   ENDIF
 END SUBROUTINE Fun_PL
 
