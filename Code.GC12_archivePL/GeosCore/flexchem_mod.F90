@@ -113,6 +113,7 @@ CONTAINS
     USE GCKPP_HetRates,       ONLY : SET_HET
     USE GCKPP_Monitor,        ONLY : SPC_NAMES, FAM_NAMES
     USE GCKPP_Parameters
+	USE gckpp_JacobianSP
     USE GCKPP_Integrator,     ONLY : INTEGRATE, NHnew
     USE GCKPP_Function 
     USE GCKPP_Model
@@ -134,6 +135,7 @@ CONTAINS
     USE TIME_MOD,             ONLY : Get_Day
     USE TIME_MOD,             ONLY : Get_Month
     USE TIME_MOD,             ONLY : Get_Year
+	USE TIME_MOD,             ONLY : GET_NHMS,GET_NYMD,ITS_A_NEW_HOUR
     USE UnitConv_Mod,         ONLY : Convert_Spc_Units
     USE UCX_MOD,              ONLY : CALC_STRAT_AER
     USE UCX_MOD,              ONLY : SO4_PHOTFRAC
@@ -218,7 +220,7 @@ CONTAINS
     REAL(fp)               :: Start,     Finish,   rtim,      itim
     REAL(fp)               :: SO4_FRAC,  YLAT,     T,         TIN
     REAL(fp)               :: JNoon_Fac, TOUT
-
+	INTEGER                :: LS_type, LS_NSEL, LS_NDEL
     ! Strings
     CHARACTER(LEN=63)      :: OrigUnit
     CHARACTER(LEN=255)     :: ErrMsg,   ThisLoc
@@ -235,16 +237,23 @@ CONTAINS
     REAL(dp)               :: RSTATE     (                  20               )
     REAL(dp)               :: GLOB_RCONST(IIPAR,JJPAR,LLPAR,NREACT           )
     REAL(fp)               :: Before     (IIPAR,JJPAR,LLPAR,State_Chm%nAdvect)
+	REAL(fp)               :: LS_Prate     (IIPAR,JJPAR,LLPAR,NVAR) !lshen
+	REAL(fp)               :: LS_Lrate     (IIPAR,JJPAR,LLPAR,NVAR) !lshen
+	INTEGER                :: LS_Alltype   (IIPAR,JJPAR,LLPAR) !lshen
+	REAL(kind=dp)          :: Prate(NVAR),Lrate(NVAR)
 
     ! For tagged CO saving
     REAL(fp)               :: LCH4, PCO_TOT, PCO_CH4, PCO_NMVOC
 
     ! Objects
     TYPE(Species), POINTER :: SpcInfo
-
+    INTEGER :: NHMS,NYMD,YMDH
+    LOGICAL :: new_hour
+	character(len=1024) :: outputname1,outputname2,outputname3,outputname4
+	
     ! For testing only, may be removed later (mps, 4/26/16)
     LOGICAL                :: DO_HETCHEM
-    REAL(fp)               :: TimeStart,TimeEnd
+    REAL(fp)               :: TimeStart,timeEnd
     !=======================================================================
     ! Do_FlexChem begins here!
     !=======================================================================
@@ -266,11 +275,18 @@ CONTAINS
     Day       =  Get_Day()    ! Current day
     Month     =  Get_Month()  ! Current month
     Year      =  Get_Year()   ! Current year
+	LS_Prate(:,:,:,:)=0.0_fp
+	LS_Lrate(:,:,:,:)=0.0_fp
 
     ! Turn heterogeneous chemistry and photolysis on/off here
     ! This is for testing only and may be removed later (mps, 4/26/16)
     DO_HETCHEM  = .TRUE.
 
+    NHMS=GET_NHMS()!lshen
+    NYMD  = GET_NYMD()!lshen
+    new_hour=ITS_A_NEW_HOUR()!lshen
+	
+	print *,'lshen_test_new_hour',NYMD,NHMS,new_hour
     ! Remove debug output
     !IF ( FIRSTCHEM .AND. am_I_Root ) THEN
     !   WRITE( 6, '(a)' ) REPEAT( '#', 32 )
@@ -594,7 +610,7 @@ CONTAINS
            '       computed Y upon return:            ', f11.4, /,          &
            'Hexit, last accepted step before exit:    ', f11.4, /,          &
            'Hnew, last predicted step (not yet taken):', f11.4 )
-    CALL CPU_TIME(time=TimeStart)
+
     !-----------------------------------------------------------------------
     ! NOTE: The following variables are held THREADPRIVATE and 
     ! therefore do not need to be included in the !$OMP+PRIVATE 
@@ -607,6 +623,7 @@ CONTAINS
     !$OMP PRIVATE  ( SO4_FRAC, IERR,     RCNTRL,  START, FINISH, ISTATUS    )&
     !$OMP PRIVATE  ( RSTATE,   SpcID,    KppID,   F,     P                  )&
     !$OMP PRIVATE  ( LCH4,     PCO_TOT,  PCO_CH4, PCO_NMVOC                 ) &
+	!$OMP PRIVATE  ( LS_type,  LS_NSEL,  LS_NDEL, Prate, Lrate ) &
     !$OMP REDUCTION( +:ITIM                                                 )&
     !$OMP REDUCTION( +:RTIM                                                 )&
     !$OMP REDUCTION( +:TOTSTEPS                                             )&
@@ -619,7 +636,6 @@ CONTAINS
     DO L = 1, LLPAR
     DO J = 1, JJPAR
     DO I = 1, IIPAR
-
        !====================================================================
        ! For safety's sake, initialize certain variables for each grid
        ! box (I,J,L), whether or not chemistry will be done there.
@@ -871,7 +887,19 @@ CONTAINS
 
        ! Update the array of rate constants
        CALL Update_RCONST( )
-
+	   
+	   !IF (new_hour) THEN
+	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)
+                 IF(I==40 .and. J==20 .and. L==36) THEN
+                    print *,VAR(107),Prate(107),Lrate(107)
+                    print *,VAR(190),Prate(190),Lrate(190)
+                 ENDIF
+	     LS_Prate(I,J,L,:)=Prate
+	     LS_Lrate(I,J,L,:)=Lrate
+	     !if(MOD(I,30)==1 .and. J==10 .and. L==2) THEN
+		    !print *, "lshen_Prate",Prate
+	     !ENDIF
+	   !ENDIF
 !#if defined( DEVEL )
 !       ! Get time when rate computation finished
 !       CALL CPU_TIME( finish )
@@ -903,7 +931,6 @@ CONTAINS
 !         ! Get time before integrator starts
 !         CALL CPU_TIME( start )
 !#endif
-
        ! Call the KPP integrator
        CALL Integrate( TIN,    TOUT,    ICNTRL,      &
                        RCNTRL, ISTATUS, RSTATE, IERR )
@@ -1117,8 +1144,6 @@ CONTAINS
     ENDDO
     ENDDO
     !$OMP END PARALLEL DO
-    CALL CPU_TIME(time=TimeEnd)
-    PRINT *,'lshen_test_CPUtime: ',TimeEnd-TimeStart
 
 !!!#if defined( DEVEL )
 !    write(*,'(a,F10.3)') 'Flex Rate Time     : ', rtim
@@ -1242,6 +1267,26 @@ CONTAINS
     ! Set FIRSTCHEM = .FALSE. -- we have gone thru one chem step
     FIRSTCHEM = .FALSE.
 
+  if (MOD(NHMS,60000)==0) then   
+    print *,'lshen_archive_PL',NHMS,new_hour 
+    YMDH=NYMD*100+NHMS/10000
+    print *,NYMD,NHMS,YMDH
+    write (outputname1, "(A15,I10,A4)") "PL/lshen_Prate_", YMDH,'.txt'
+    write (outputname2, "(A15,I10,A4)") "PL/lshen_Lrate_", YMDH,'.txt'		
+    OPEN(unit=1101,file=outputname1)
+    OPEN(unit=1102,file=outputname2)
+         DO L=1,LLPAR
+           DO J=1,JJPAR
+            DO I=1,IIPAR
+              write(1101,'(3I4,234E15.3)'), I,J,L,LS_Prate(I,J,L,:)
+              write(1102,'(3I4,234E15.3)'), I,J,L,LS_Lrate(I,J,L,:)
+            ENDDO
+           ENDDO
+         ENDDO
+    close(1101)!lshen
+    close(1102)
+  endif
+  
   END SUBROUTINE Do_FlexChem
 !EOC
 !------------------------------------------------------------------------------
