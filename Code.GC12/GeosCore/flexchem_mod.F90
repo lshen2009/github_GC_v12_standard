@@ -244,7 +244,7 @@ CONTAINS
     REAL(fp)               :: COSSZA,SZA,PI180
     ! Objects
     TYPE(Species), POINTER :: SpcInfo
-    INTEGER :: NHMS,NYMD,YMDH
+    INTEGER :: NHMS,NYMD,YMDH,LS_change
     LOGICAL :: new_hour,flag
 	character(len=1024) :: outputname1,outputname2,outputname3,outputname4
 	
@@ -619,7 +619,7 @@ CONTAINS
     !$OMP PRIVATE  ( RSTATE,   SpcID,    KppID,   F,     P                  )&
     !$OMP PRIVATE  ( LCH4,     PCO_TOT,  PCO_CH4, PCO_NMVOC                 ) &
 	!$OMP PRIVATE  ( LS_type,  LS_NSEL,  LS_NDEL, Prate, Lrate ) &
-	!$OMP PRIVATE  ( SZA,PI180,COSSZA) &
+	!$OMP PRIVATE  ( SZA,PI180,COSSZA,LS_change) &
     !$OMP REDUCTION( +:ITIM                                                 )&
     !$OMP REDUCTION( +:RTIM                                                 )&
     !$OMP REDUCTION( +:TOTSTEPS                                             )&
@@ -888,7 +888,8 @@ CONTAINS
 	   !IF (new_hour) THEN
 	   !IF (MOD(NHMS,2000)==0) then	  
 	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)
-		 LS_type=Determine_type(Prate,Lrate)		
+		 LS_change=0
+		 LS_type=Determine_type(Prate,Lrate,LS_change)		
 		   PI180  = PI/180.e+0_fp
 		   COSSZA=State_Met%SUNCOSmid(I,J)
 		   SZA    = acos(MIN(MAX(COSSZA,-1._fp),1._fp))/PI180
