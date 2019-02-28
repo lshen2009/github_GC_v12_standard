@@ -890,6 +890,9 @@ CONTAINS
 	   
 	   !IF (new_hour) THEN
 	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)
+             IF(L>=59 .and. J>=22 .and. J<=24) THEN
+               print *,"lshen_layers",I,J,L,SUM(Prate),SUM(Lrate)
+             ENDIF
 	     LS_Prate(I,J,L,:)=Prate
 	     LS_Lrate(I,J,L,:)=Lrate
 	     !if(MOD(I,30)==1 .and. J==10 .and. L==2) THEN

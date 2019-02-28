@@ -3042,7 +3042,7 @@ SUBROUTINE Fun_PL ( V, F, RCT, Prate, Lrate)
   Lrate(234) = -0.91*A(299)-A(324)-A(540)-A(543)-A(545)-A(549)-A(552)-A(558)-A(559)
 
   diff=Prate+Lrate-Vdot  
-  IF(SUM(ABS(diff))>1E-3) THEN
+  IF(SUM(ABS(diff))>1) THEN
      ind=maxloc(ABS(diff))
      print *,"lshen_FUN_PL_error",SUM(ABS(diff))
 	 print *,"lshen_tracer",ind(1)
