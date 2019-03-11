@@ -21166,7 +21166,8 @@ FUNCTION Determine_type (Prate,Lrate,LS_change) RESULT( flag )
   INTEGER ::Vdot(NVAR),PP(10),ap,flag,I,LS_change
   flag=0
   Vdot=0
-  WHERE (abs(Prate)>=thresholds .or. abs(Lrate)>=thresholds) Vdot=1
+  !WHERE (abs(Prate)>=thresholds .or. abs(Lrate)>=thresholds) Vdot=1
+  WHERE (abs(Prate)>=10 .or. abs(Lrate)>=10) Vdot=1
   PP(1)=SUM(Vdot(LS_ind_1))
   PP(2)=SUM(Vdot(LS_ind_2))
   PP(3)=SUM(Vdot(LS_ind_3))
