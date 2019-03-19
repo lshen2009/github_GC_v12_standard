@@ -702,7 +702,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_1(LU_NONZERO_1,LU_NSEL_1, A, b )
+   CALL KppSolve_1(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -1895,7 +1895,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_2(LU_NONZERO_2,LU_NSEL_2, A, b )
+   CALL KppSolve_2(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -3088,7 +3088,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_3(LU_NONZERO_3,LU_NSEL_3, A, b )
+   CALL KppSolve_3(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -4281,7 +4281,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_4(LU_NONZERO_4,LU_NSEL_4, A, b )
+   CALL KppSolve_4(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -5474,7 +5474,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_5(LU_NONZERO_5,LU_NSEL_5, A, b )
+   CALL KppSolve_5(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -6667,7 +6667,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_6(LU_NONZERO_6,LU_NSEL_6, A, b )
+   CALL KppSolve_6(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -7860,7 +7860,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_7(LU_NONZERO_7,LU_NSEL_7, A, b )
+   CALL KppSolve_7(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -9053,7 +9053,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_8(LU_NONZERO_8,LU_NSEL_8, A, b )
+   CALL KppSolve_8(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -10246,7 +10246,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_9(LU_NONZERO_9,LU_NSEL_9, A, b )
+   CALL KppSolve_9(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -11439,7 +11439,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_10(LU_NONZERO_10,LU_NSEL_10, A, b )
+   CALL KppSolve_10(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -12632,7 +12632,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_11(LU_NONZERO_11,LU_NSEL_11, A, b )
+   CALL KppSolve_11(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -13825,7 +13825,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_12(LU_NONZERO_12,LU_NSEL_12, A, b )
+   CALL KppSolve_12(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -15018,7 +15018,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_13(LU_NONZERO_13,LU_NSEL_13, A, b )
+   CALL KppSolve_13(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -16211,7 +16211,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_14(LU_NONZERO_14,LU_NSEL_14, A, b )
+   CALL KppSolve_14(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -17404,7 +17404,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_15(LU_NONZERO_15,LU_NSEL_15, A, b )
+   CALL KppSolve_15(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -18597,7 +18597,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_16(LU_NONZERO_16,LU_NSEL_16, A, b )
+   CALL KppSolve_16(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -19790,7 +19790,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_17(LU_NONZERO_17,LU_NSEL_17, A, b )
+   CALL KppSolve_17(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -20983,7 +20983,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_18(LU_NONZERO_18,LU_NSEL_18, A, b )
+   CALL KppSolve_18(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -22162,7 +22162,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_19(LU_NONZERO_19,LU_NSEL_19, A, b )
+   CALL KppSolve_19(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
@@ -23349,7 +23349,7 @@ Stage: DO istage = 1, ros_S
       PRINT*,"Error in DGETRS. ISING=",ISING
    END IF  
 #else   
-   CALL KppSolve_20(LU_NONZERO_20,LU_NSEL_20, A, b )
+   CALL KppSolve_20(A, b )
 #endif
 
    ISTATUS(Nsol) = ISTATUS(Nsol) + 1
