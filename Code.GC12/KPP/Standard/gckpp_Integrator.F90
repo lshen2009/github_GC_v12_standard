@@ -671,7 +671,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_1,LU_NONZERO_1,LU_CROW_1,LU_DIAG_1,LU_ICOL_1 )
+   CALL KppDecomp_1 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -1864,7 +1864,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_2,LU_NONZERO_2,LU_CROW_2,LU_DIAG_2,LU_ICOL_2 )
+   CALL KppDecomp_2 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -3057,7 +3057,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_3,LU_NONZERO_3,LU_CROW_3,LU_DIAG_3,LU_ICOL_3 )
+   CALL KppDecomp_3 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -4250,7 +4250,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_4,LU_NONZERO_4,LU_CROW_4,LU_DIAG_4,LU_ICOL_4 )
+   CALL KppDecomp_4 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -5443,7 +5443,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_5,LU_NONZERO_5,LU_CROW_5,LU_DIAG_5,LU_ICOL_5 )
+   CALL KppDecomp_5 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -6636,7 +6636,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_6,LU_NONZERO_6,LU_CROW_6,LU_DIAG_6,LU_ICOL_6 )
+   CALL KppDecomp_6 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -7829,7 +7829,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_7,LU_NONZERO_7,LU_CROW_7,LU_DIAG_7,LU_ICOL_7 )
+   CALL KppDecomp_7 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -11408,7 +11408,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_10,LU_NONZERO_10,LU_CROW_10,LU_DIAG_10,LU_ICOL_10 )
+   CALL KppDecomp_10 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -12601,7 +12601,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_11,LU_NONZERO_11,LU_CROW_11,LU_DIAG_11,LU_ICOL_11 )
+   CALL KppDecomp_11 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -14987,7 +14987,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_13,LU_NONZERO_13,LU_CROW_13,LU_DIAG_13,LU_ICOL_13 )
+   CALL KppDecomp_13 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -19759,7 +19759,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_17,LU_NONZERO_17,LU_CROW_17,LU_DIAG_17,LU_ICOL_17 )
+   CALL KppDecomp_17 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -23851,7 +23851,5 @@ SUBROUTINE JacTemplate_20( T, Y, Jcb, VAR_deleted )
     TIME = Told
 
 END SUBROUTINE JacTemplate_20
-
-
 
 END MODULE gckpp_Integrator
