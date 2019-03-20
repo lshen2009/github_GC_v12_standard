@@ -9022,7 +9022,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_8,LU_NONZERO_8,LU_CROW_8,LU_DIAG_8,LU_ICOL_8 )
+   CALL KppDecomp_8 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -10215,7 +10215,7 @@ Stage: DO istage = 1, ros_S
 #ifdef FULL_ALGEBRA    
    CALL  DGETRF( N, N, A, N, Pivot, ISING )
 #else   
-   CALL KppDecomp ( A, ISING,LU_NSEL_9,LU_NONZERO_9,LU_CROW_9,LU_DIAG_9,LU_ICOL_9 )
+   CALL KppDecomp_9 ( A, ISING )
    Pivot(1) = 1
 #endif
    ISTATUS(Ndec) = ISTATUS(Ndec) + 1
@@ -23851,5 +23851,7 @@ SUBROUTINE JacTemplate_20( T, Y, Jcb, VAR_deleted )
     TIME = Told
 
 END SUBROUTINE JacTemplate_20
+
+
 
 END MODULE gckpp_Integrator
