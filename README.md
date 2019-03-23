@@ -1,1 +1,0 @@
-# github_GC_v12_standard
