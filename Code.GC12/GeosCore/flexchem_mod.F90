@@ -887,8 +887,14 @@ CONTAINS
 	   !lshen added this
 	   !IF (new_hour) THEN
 	   !IF (MOD(NHMS,2000)==0) then	  
-	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)
+	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)		 
 		 LS_change=0
+		 IF(L>=28 .and. L<=37) THEN
+		    LS_change=1
+		 ENDIF
+		 IF(L>=49 .and. L<=60) THEN
+		    LS_change=1
+		 ENDIF		 
 		 LS_type=Determine_type(Prate,Lrate,LS_change)		
 		   PI180  = PI/180.e+0_fp
 		   COSSZA=State_Met%SUNCOSmid(I,J)
@@ -1048,9 +1054,9 @@ CONTAINS
             CALL Integrate_20( TIN,TOUT, Prate, Lrate, ICNTRL, &
                        RCNTRL, ISTATUS, RSTATE, IERR )				   
 		 CASE DEFAULT
-		    LS_NSEL=LU_NSEL_19
-			LS_NDEL=LU_NDEL_19				 
-            CALL Integrate_19( TIN,TOUT, Prate, Lrate, ICNTRL, &
+		    LS_NSEL=LU_NSEL_20
+			LS_NDEL=LU_NDEL_20				 
+            CALL Integrate_20( TIN,TOUT, Prate, Lrate, ICNTRL, &
                        RCNTRL, ISTATUS, RSTATE, IERR )					    
 	   END SELECT		 	   	  
 
@@ -1092,9 +1098,9 @@ CONTAINS
           FIX = C(NVAR+1:NSPEC)
           CALL Update_RCONST( )		  		 
 		  
-		    LS_NSEL=LU_NSEL_19
-			LS_NDEL=LU_NDEL_19				 
-            CALL Integrate_19( TIN,TOUT, Prate, Lrate, ICNTRL, &
+		    LS_NSEL=LU_NSEL_20
+			LS_NDEL=LU_NDEL_20				 
+            CALL Integrate_20( TIN,TOUT, Prate, Lrate, ICNTRL, &
                        RCNTRL, ISTATUS, RSTATE, IERR )	
           IF ( IERR < 0 ) THEN 
              WRITE(6,*) '## INTEGRATE FAILED TWICE !!! '
