@@ -887,18 +887,18 @@ CONTAINS
 	   !lshen added this
 	   !IF (new_hour) THEN
 	   !IF (MOD(NHMS,2000)==0) then	  
-	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)		 
+	     CALL Fun_PL(VAR, FIX, RCONST, Prate, Lrate)		
+                   PI180  = PI/180.e+0_fp
+                   COSSZA=State_Met%SUNCOSmid(I,J)
+                   SZA    = acos(MIN(MAX(COSSZA,-1._fp),1._fp))/PI180 
 		 LS_change=0
-		 IF(L>=28 .and. L<=37) THEN
+		 IF(L>=28 .and. L<=37 ) THEN
 		    LS_change=1
 		 ENDIF
-		 IF(L>=49 .and. L<=60) THEN
+		 IF(L>=49 .and. L<=60 .and. SZA>=80 .and. SZA<=110) THEN
 		    LS_change=1
 		 ENDIF		 
 		 LS_type=Determine_type(Prate,Lrate,LS_change)		
-		   PI180  = PI/180.e+0_fp
-		   COSSZA=State_Met%SUNCOSmid(I,J)
-		   SZA    = acos(MIN(MAX(COSSZA,-1._fp),1._fp))/PI180
          !IF(SZA>=90 .and. SZA<=100 .and. L>=20) THEN		 
 		 !  LS_type=13
 		 !ENDIF	 
